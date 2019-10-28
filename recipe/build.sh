@@ -46,5 +46,5 @@ cmake --build . --config "$CONFIGURATION"
 
 cmake --build . --config "$CONFIGURATION" --target install
 
-mkdir -p $PREFIX/lib/python$MY_PY_VER/site-packages
-cp -r $PREFIX/share/chrono/python/* $PREFIX/lib/python$MY_PY_VER/site-packages
+mkdir -p $PREFIX/lib/python$PY_VER/site-packages
+cp -r $PREFIX/share/chrono/python/* $PREFIX/lib/python$PY_VER/site-packages
