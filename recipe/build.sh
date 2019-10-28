@@ -12,9 +12,6 @@ else
     PY_LIB="libpython${MY_PY_VER}.so"
 fi
 
-# set MKL vars
-export MKL_INTERFACE_LAYER=LP64
-export MKL_THREADING_LAYER=INTEL
 CONFIGURATION=Release
 # Configure step
 cmake -DCMAKE_INSTALL_PREFIX=$PREFIX \
@@ -36,7 +33,7 @@ cmake -DCMAKE_INSTALL_PREFIX=$PREFIX \
       -DCMAKE_BUILD_TYPE:STRING=Release \
       -DPYTHON_EXECUTABLE:FILEPATH=$PYTHON \
       -DPYTHON_INCLUDE_DIR:PATH=$PREFIX/include/python$MY_PY_VER \
-      -DPYTHON_LIBRARY:FILEPATH=$PREFIX/lib/${PY_LIB} \
+      -DPYTHON_LIBRARY:FILEPATH=$PREFIX/lib/$PY_LIB \
       ./..
 
 # Build step
@@ -45,3 +42,6 @@ cmake -DCMAKE_INSTALL_PREFIX=$PREFIX \
 cmake --build . --config "$CONFIGURATION"
 
 cmake --build . --config "$CONFIGURATION" --target install
+
+mkdir -p $PREFIX/lib/python$PY_VER/site-packages
+cp -r $PREFIX/share/chrono/python/* $PREFIX/lib/python$PY_VER/site-packages

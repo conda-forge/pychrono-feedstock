@@ -1,6 +1,6 @@
 {% set name = "pychrono" %}
 {% set version = "4.0.0" %}
-{% set build = 1 %}
+{% set build = 2 %}
 {% set sha256 = "803b5089e48334771f652f5bec79f95f2a42cfb02d2ffbaf8ad9e5dca2ba1886" %}
 
 package:
@@ -13,7 +13,7 @@ source:
 
 build:
   number: {{ build }}
-  skip: true  # [win]
+  skip: true  # [not linux]
 
 requirements:
   build:
@@ -27,8 +27,8 @@ requirements:
     - python
 
 test:
-  commands:
-    - test -f $PREFIX/include/chrono/core/ChChrono.h  # [unix]
+  imports:
+    - pychrono
 
 about:
   home: https://github.com/projectchrono/chrono
