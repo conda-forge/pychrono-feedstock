@@ -36,7 +36,7 @@ cmake -DCMAKE_INSTALL_PREFIX=$PREFIX \
       -DCMAKE_BUILD_TYPE:STRING=Release \
       -DPYTHON_EXECUTABLE:FILEPATH=$PYTHON \
       -DPYTHON_INCLUDE_DIR:PATH=$PREFIX/include/python$MY_PY_VER \
-      -DPYTHON_LIBRARY:FILEPATH=$PREFIX/lib/${PY_LIB} \
+      -DPYTHON_LIBRARY:FILEPATH=$PREFIX/lib/$PY_LIB \
       ./..
 
 # Build step
@@ -46,5 +46,5 @@ cmake --build . --config "$CONFIGURATION"
 
 cmake --build . --config "$CONFIGURATION" --target install
 
-mkdir -p $PREFIX/lib/$PY_LIB/site-packages
-cp -r $PREFIX/share/chrono/python/* $PREFIX/lib/$PY_LIB/site-packages
+mkdir -p $PREFIX/lib/python$MY_PY_VER/site-packages
+cp -r $PREFIX/share/chrono/python/* $PREFIX/lib/python$MY_PY_VER/site-packages
