@@ -12,9 +12,6 @@ else
     PY_LIB="libpython${MY_PY_VER}.so"
 fi
 
-# set MKL vars
-export MKL_INTERFACE_LAYER=LP64
-export MKL_THREADING_LAYER=INTEL
 CONFIGURATION=Release
 # Configure step
 cmake -DCMAKE_INSTALL_PREFIX=$PREFIX \
