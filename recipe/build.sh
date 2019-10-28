@@ -45,3 +45,6 @@ cmake -DCMAKE_INSTALL_PREFIX=$PREFIX \
 cmake --build . --config "$CONFIGURATION"
 
 cmake --build . --config "$CONFIGURATION" --target install
+
+mkdir -p $PREFIX/lib/$PY_LIB/site-packages
+cp -r $PREFIX/share/chrono/python/* $PREFIX/lib/$PY_LIB/site-packages
