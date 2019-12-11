@@ -1,14 +1,15 @@
 {% set name = "pychrono" %}
 {% set version = "4.0.0" %}
 {% set build = 3 %}
-{% set sha256 = "803b5089e48334771f652f5bec79f95f2a42cfb02d2ffbaf8ad9e5dca2ba1886" %}
+{% set sha256 = "ec86fe31ac927a65bf765226c3dc13c170580d0cb797f984d82725b54ddefb04" %}
 
 package:
   name: {{ name }}
   version: {{ version }}
 
 source:
-  url: https://github.com/projectchrono/chrono/archive/{{ version }}.tar.gz
+  url: https://github.com/projectchrono/chrono/tarball/develop
+  fn: develop.tar.gz
   sha256: {{ sha256 }}
 
 build:
@@ -23,6 +24,7 @@ requirements:
     - swig 4.0.1
   host:
     - python 3
+    - eigen
   run:
     - python 3
 
