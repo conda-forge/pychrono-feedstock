@@ -1,14 +1,6 @@
 mkdir ./build
 cd ./build
-if [ "$PY3K" == "1" ]; then
-    if [ "$PY_VER" == "3.8" ]; then
-        MY_PY_VER="${PY_VER}"
-    else
-        MY_PY_VER="${PY_VER}m"
-    fi
-else
-    MY_PY_VER="${PY_VER}"
-fi
+MY_PY_VER="${PY_VER}"
 
 if [ `uname` == Darwin ]; then
     PY_LIB="libpython${MY_PY_VER}.dylib"
