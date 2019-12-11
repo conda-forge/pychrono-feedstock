@@ -1,7 +1,11 @@
 mkdir ./build
 cd ./build
 if [ "$PY3K" == "1" ]; then
-    MY_PY_VER="${PY_VER}m"
+    if [ "$PY_VER" == "3.8" ]; then
+        MY_PY_VER="${PY_VER}"
+    else
+        MY_PY_VER="${PY_VER}m"
+    fi
 else
     MY_PY_VER="${PY_VER}"
 fi
