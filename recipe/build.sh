@@ -1,16 +1,16 @@
 mkdir ./build
 cd ./build
 
-if [ -d "${PREFIX}/include/python${PY_VER}" ]; then
-    MY_PY_VER="${PY_VER}"
-else
-    MY_PY_VER="${PY_VER}m"
+HOST_PY_VER=`python -c 'import sys; print(str(sys.version_info[0])+"."+str(sys.version_info[1]))'`
+
+if [ ! -d "${PREFIX}/include/python${HOST_PY_VER}" ]; then
+    HOST_PY_VER="${HOST_PY_VER}m"
 fi
 
 if [ `uname` == Darwin ]; then
-    PY_LIB="libpython${MY_PY_VER}.dylib"
+    PY_LIB="libpython${HOST_PY_VER}.dylib"
 else
-    PY_LIB="libpython${MY_PY_VER}.so"
+    PY_LIB="libpython${HOST_PY_VER}.so"
 fi
 
 CONFIGURATION=Release
@@ -44,5 +44,5 @@ cmake --build . --config "$CONFIGURATION"
 
 cmake --build . --config "$CONFIGURATION" --target install
 
-mkdir -p $PREFIX/lib/python$PY_VER/site-packages
-cp -r $PREFIX/share/chrono/python/* $PREFIX/lib/python$PY_VER/site-packages
+mkdir -p $PREFIX/lib/python$HOST_PY_VER/site-packages
+cp -r $PREFIX/share/chrono/python/* $PREFIX/lib/python$HOST_PY_VER/site-packages
