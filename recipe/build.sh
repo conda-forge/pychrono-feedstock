@@ -1,6 +1,11 @@
 mkdir ./build
 cd ./build
-MY_PY_VER="${PY_VER}"
+
+if [ -d "${PREFIX}/include/python${PY_VER}" ]; then
+    MY_PY_VER="${PY_VER}"
+else
+    MY_PY_VER="${PY_VER}m"
+fi
 
 if [ `uname` == Darwin ]; then
     PY_LIB="libpython${MY_PY_VER}.dylib"
@@ -30,6 +35,7 @@ cmake -DCMAKE_INSTALL_PREFIX=$PREFIX \
       -DPYTHON_EXECUTABLE:FILEPATH=$PYTHON \
       -DPYTHON_INCLUDE_DIR:PATH=$PREFIX/include/python$MY_PY_VER \
       -DPYTHON_LIBRARY:FILEPATH=$PREFIX/lib/$PY_LIB \
+      -DEIGEN3_INCLUDE_DIR:PATH=$PREFIX/include/eigen3 \
       ./..
 
 # Build step
