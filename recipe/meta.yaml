@@ -25,12 +25,13 @@ requirements:
   host:
     - python 3
     - eigen
+    - openmp
   run:
     - python 3
 
 test:
-  commands:
-     python -c "import os, site; os.environ['PYTHONPATH'] = site.getsitepackages()[0]; import pychrono"
+  imports:
+     - pychrono
 
 about:
   home: https://github.com/projectchrono/chrono
