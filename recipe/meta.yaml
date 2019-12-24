@@ -29,8 +29,8 @@ requirements:
     - python 3
 
 test:
-  imports:
-    - pychrono
+  commands:
+     python -c "import os, sys; os.environ['PYTHONPATH'] = sys.exec_prefix+'/bin'; import pychrono"
 
 about:
   home: https://github.com/projectchrono/chrono
