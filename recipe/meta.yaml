@@ -28,6 +28,7 @@ requirements:
     - openmp
   run:
     - python 3
+    - openmp
 
 test:
   imports:
