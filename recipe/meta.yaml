@@ -1,7 +1,7 @@
 {% set name = "pychrono" %}
 {% set version = "4.0.0" %}
 {% set build = 3 %}
-{% set sha256 = "1c218e7b8de3674277826dc8f751413746f1b2d94698f029ce41a0caaacdc0c1" %}
+{% set sha256 = "fb436d8cd750210ad11b8d505adc24741fffd654b477b4c6dabda27d71515107" %}
 
 package:
   name: {{ name }}
