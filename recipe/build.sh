@@ -1,6 +1,8 @@
 mkdir ./build
 cd ./build
 
+sed -i 's/${PYTHON_LIBRARY}//g' $SRC_DIR/src/chrono_python/CMakeLists.txt
+
 HOST_PY_VER=`python -c 'import sys; print(str(sys.version_info[0])+"."+str(sys.version_info[1]))'`
 
 if [ ! -d "${PREFIX}/include/python${HOST_PY_VER}" ]; then
@@ -30,7 +32,6 @@ cmake -DCMAKE_INSTALL_PREFIX=$PREFIX \
       -DBUILD_DEMOS:BOOL=OFF \
       -DBUILD_TESTING:BOOL=OFF \
       -DBUILD_BENCHMARKING:BOOL=OFF \
-      -DBUILD_GMOCK:BOOL=OFF \
       -DENABLE_MODULE_CASCADE:BOOL=OFF \
       -DENABLE_MODULE_MKL:BOOL=OFF \
       -DEIGEN3_INCLUDE_DIR:PATH=$PREFIX/include/eigen3 \
