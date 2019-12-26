@@ -1,8 +1,6 @@
 mkdir ./build
 cd ./build
 
-sed -i 's/${PYTHON_LIBRARY}//g' $SRC_DIR/src/chrono_python/CMakeLists.txt
-
 HOST_PY_VER=`python -c 'import sys; print(str(sys.version_info[0])+"."+str(sys.version_info[1]))'`
 
 if [ ! -d "${PREFIX}/include/python${HOST_PY_VER}" ]; then
@@ -11,8 +9,10 @@ fi
 
 if [ `uname` == Darwin ]; then
     PY_LIB="libpython${HOST_PY_VER}.dylib"
+    sed -i '' 's/${PYTHON_LIBRARY}//g' $SRC_DIR/src/chrono_python/CMakeLists.txt
 else
     PY_LIB="libpython${HOST_PY_VER}.so"
+    sed -i 's/${PYTHON_LIBRARY}//g' $SRC_DIR/src/chrono_python/CMakeLists.txt
 fi
 
 CONFIGURATION=Release
