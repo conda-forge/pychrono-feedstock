@@ -15,6 +15,8 @@ else
     sed -i 's/${PYTHON_LIBRARY}//g' $SRC_DIR/src/chrono_python/CMakeLists.txt
 fi
 
+export OTHER_LDFLAGS="-Wl,-undefined,dynamic_lookup"
+
 CONFIGURATION=Release
 # Configure step
 cmake -DCMAKE_INSTALL_PREFIX=$PREFIX \
