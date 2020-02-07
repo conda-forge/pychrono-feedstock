@@ -1,7 +1,7 @@
 {% set name = "pychrono" %}
 {% set version = "4.0.0" %}
 {% set build = 3 %}
-{% set sha256 = "7ee0d972cf46bb5ea2342b6b38c77cce4dc502562515983ed7551152db7c219d" %}
+{% set sha256 = "ccaaabc4359a245ecef211f1d7405f8d8554d5a9dd7145d0e283e31736b56b5f" %}
 
 package:
   name: {{ name }}
@@ -14,7 +14,7 @@ source:
 
 build:
   number: {{ build }}
-  skip: true  # [win]
+  skip: true  # [win or py2k]
 
 requirements:
   build:
@@ -23,11 +23,11 @@ requirements:
     - cmake
     - swig 4.0.1
   host:
-    - python 3
+    - python
     - eigen
     - openmp
   run:
-    - python 3
+    - python
     - openmp
 
 test:

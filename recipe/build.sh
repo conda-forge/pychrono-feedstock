@@ -10,17 +10,18 @@ fi
 if [ `uname` == Darwin ]; then
     PY_LIB="libpython${HOST_PY_VER}.dylib"
     sed -i '' 's/${PYTHON_LIBRARY}//g' $SRC_DIR/src/chrono_python/CMakeLists.txt
-    sed -i '' 's/${AVX_FLAGS}//g' $SRC_DIR/src/chrono_python/CMakeLists.txt
-    sed -i '' 's/${SSE_FLAGS}//g' $SRC_DIR/src/chrono_python/CMakeLists.txt
-    sed -i '' 's/${NEON_FLAGS}//g' $SRC_DIR/src/chrono_python/CMakeLists.txt
-    sed -i '' 's/${FMA_FLAGS}//g' $SRC_DIR/src/chrono_python/CMakeLists.txt
+    sed -i '' 's/find_package(AVX)//g' $SRC_DIR/src/CMakeLists.txt
+    sed -i '' 's/find_package(SSE)//g' $SRC_DIR/src/CMakeLists.txt
+    sed -i '' 's/find_package(NEON)//g' $SRC_DIR/src/CMakeLists.txt
+    sed -i '' 's/find_package(FMA)//g' $SRC_DIR/src/CMakeLists.txt
+    sed -i '' 's/find_package(OpenMP)//g' $SRC_DIR/src/CMakeLists.txt
 else
     PY_LIB="libpython${HOST_PY_VER}.so"
-    sed -i 's/${PYTHON_LIBRARY}//g' $SRC_DIR/src/chrono_python/CMakeLists.txt
-    sed -i 's/${AVX_FLAGS}//g' $SRC_DIR/src/chrono_python/CMakeLists.txt
-    sed -i 's/${SSE_FLAGS}//g' $SRC_DIR/src/chrono_python/CMakeLists.txt
-    sed -i 's/${NEON_FLAGS}//g' $SRC_DIR/src/chrono_python/CMakeLists.txt
-    sed -i 's/${FMA_FLAGS}//g' $SRC_DIR/src/chrono_python/CMakeLists.txt
+    sed -i 's/find_package(AVX)//g' $SRC_DIR/src/CMakeLists.txt
+    sed -i 's/find_package(SSE)//g' $SRC_DIR/src/CMakeLists.txt
+    sed -i 's/find_package(NEON)//g' $SRC_DIR/src/CMakeLists.txt
+    sed -i 's/find_package(FMA)//g' $SRC_DIR/src/CMakeLists.txt
+    sed -i 's/find_package(OpenMP)//g' $SRC_DIR/src/CMakeLists.txt
 fi
 
 export LDFLAGS="-Wl,-undefined,dynamic_lookup $LDFLAGS"
