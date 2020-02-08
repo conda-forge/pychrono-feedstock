@@ -14,7 +14,7 @@ source:
 
 build:
   number: {{ build }}
-  skip: true  # [win]
+  skip: true  # [win or py2k]
 
 requirements:
   build:
@@ -23,11 +23,11 @@ requirements:
     - cmake
     - swig 4.0.1
   host:
-    - python 3
+    - python
     - eigen
     - openmp
   run:
-    - python 3
+    - python
     - openmp
 
 test:
