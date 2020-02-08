@@ -2,6 +2,11 @@ mkdir ./build
 cd ./build
 
 HOST_PY_VER=`python -c 'import sys; print(str(sys.version_info[0])+"."+str(sys.version_info[1]))'`
+INSTALL_PYTHON_PACKAGE="lib/python${HOST_PY_VER}/site-packages"
+
+if [ ! -d "${PREFIX}/include/python${HOST_PY_VER}" ]; then
+    HOST_PY_VER="${HOST_PY_VER}m"
+fi
 
 if [ `uname` == Darwin ]; then
     PY_LIB="libpython${HOST_PY_VER}.dylib"
@@ -27,7 +32,7 @@ CONFIGURATION=Release
 cmake -DCMAKE_INSTALL_PREFIX=$PREFIX \
       -DCMAKE_PREFIX_PATH=$PREFIX \
       -DCMAKE_SYSTEM_PREFIX_PATH=$PREFIX \
-      -DCH_INSTALL_PYTHON_PACKAGE=lib/python$HOST_PY_VER/site-packages \
+      -DCH_INSTALL_PYTHON_PACKAGE=$INSTALL_PYTHON_PACKAGE \
       -DPYTHON_EXECUTABLE:FILEPATH=$PYTHON \
       -DPYTHON_INCLUDE_DIR:PATH=$PREFIX/include/python$HOST_PY_VER \
       -DPYTHON_LIBRARY:FILEPATH=$PREFIX/lib/${PY_LIB} \

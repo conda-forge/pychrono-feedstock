@@ -22,13 +22,15 @@ requirements:
     - {{ compiler('cxx') }}
     - cmake
     - swig 4.0.1
+    - llvm-openmp  # [osx]
+    - libgomp      # [linux and not aarch64]
   host:
     - python
     - eigen
-    - openmp
+    - llvm-openmp  # [osx]
   run:
     - python
-    - openmp
+    - llvm-openmp  # [osx]
 
 test:
   imports:
