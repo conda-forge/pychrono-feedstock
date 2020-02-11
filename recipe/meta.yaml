@@ -1,14 +1,14 @@
 {% set name = "pychrono" %}
 {% set version = "4.0.0" %}
 {% set build = 3 %}
-{% set sha256 = "7324e9ce248c798d40c2db94f5712fff1fe13c78c12b5198583761ed62a48296" %}
+{% set sha256 = "6e4e508a31dc2058ce6baa337cba0d3bff2cedaa8740f5a58cbf1e2f48ca65fc" %}
 
 package:
   name: {{ name }}
   version: {{ version }}
 
 source:
-  url: https://github.com/davidbrochart/chrono/tarball/fix_termios
+  url: https://github.com/projectchrono/chrono/tarball/develop
   fn: develop.tar.gz
   sha256: {{ sha256 }}
 
