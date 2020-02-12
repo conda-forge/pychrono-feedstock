@@ -9,7 +9,6 @@ if [ ! -d "${PREFIX}/include/python${HOST_PY_VER}" ]; then
 fi
 
 if [ `uname` == Darwin ]; then
-    export CXXFLAGS="${CXXFLAGS} --trace-includes "
     PY_LIB="libpython${HOST_PY_VER}.dylib"
     sed -i '' 's/${PYTHON_LIBRARY}//g' $SRC_DIR/src/chrono_python/CMakeLists.txt
     sed -i '' 's/find_package(AVX)//g' $SRC_DIR/src/CMakeLists.txt
@@ -56,7 +55,6 @@ cmake -DCMAKE_INSTALL_PREFIX=$PREFIX \
       -DENABLE_MODULE_PARALLEL:BOOL=OFF \
       -DENABLE_MODULE_OPENGL:BOOL=OFF \
       -DENABLE_MODULE_OGRE:BOOL=OFF \
-      -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON \
       ./..
 
 # Build step
