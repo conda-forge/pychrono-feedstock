@@ -1,7 +1,7 @@
 {% set name = "pychrono" %}
-{% set version = "5.0.0" %}
-{% set build = 0 %}
-{% set sha256 = "edea04cb4bcf62ebd35e617f266379a223a0fb593fc65c39a460b3e20a38e65a" %}
+{% set version = "4.0.0" %}
+{% set build = 3 %}
+{% set sha256 = "803b5089e48334771f652f5bec79f95f2a42cfb02d2ffbaf8ad9e5dca2ba1886" %}
 
 package:
   name: {{ name }}
@@ -9,7 +9,6 @@ package:
 
 source:
   url: https://github.com/projectchrono/chrono/archive/{{ version }}.tar.gz
-  fn: develop.tar.gz
   sha256: {{ sha256 }}
 
 build:
@@ -21,7 +20,7 @@ requirements:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
     - cmake
-    - swig 4.0.1
+    - swig 3.0.12
     - llvm-openmp  # [osx]
     - libgomp      # [linux and not aarch64]
   host:
