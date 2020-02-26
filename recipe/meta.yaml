@@ -40,6 +40,21 @@ outputs:
         - test -f ${PREFIX}/lib/libchrono.dylib  # [osx]
   - name: pychrono
     script: build_python.sh
+    requirements:
+      build:
+        - {{ compiler('c') }}
+        - {{ compiler('cxx') }}
+        - cmake
+        - swig 3.0.12
+        - llvm-openmp  # [osx]
+        - libgomp      # [linux and not aarch64]
+      host:
+        - python
+        - eigen
+        - llvm-openmp  # [osx]
+      run:
+        - python
+        - llvm-openmp  # [osx]
     test:
       imports:
         - pychrono
