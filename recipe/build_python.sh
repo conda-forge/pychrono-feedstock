@@ -1,5 +1,5 @@
-mkdir ./build
-cd ./build
+mkdir ./build_python
+cd ./build_python
 
 HOST_PY_VER=`python -c 'import sys; print(str(sys.version_info[0])+"."+str(sys.version_info[1]))'`
 INSTALL_PYTHON_PACKAGE="lib/python${HOST_PY_VER}/site-packages"

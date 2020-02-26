@@ -15,30 +15,27 @@ build:
   number: {{ build }}
   skip: true  # [win or py2k]
 
-requirements:
-  build:
-    - {{ compiler('c') }}
-    - {{ compiler('cxx') }}
-    - cmake
-    - swig 3.0.12
-    - llvm-openmp  # [osx]
-    - libgomp      # [linux and not aarch64]
-  host:
-    - python
-    - eigen
-    - llvm-openmp  # [osx]
-  run:
-    - python
-    - llvm-openmp  # [osx]
-
 outputs:
   - name: chrono
-    script: install_lib.sh
+    script: build_lib.sh
+    requirements:
+      build:
+        - {{ compiler('c') }}
+        - {{ compiler('cxx') }}
+        - cmake
+        - llvm-openmp  # [osx]
+        - libgomp      # [linux and not aarch64]
+      host:
+        - eigen
+        - llvm-openmp  # [osx]
+      run:
+        - llvm-openmp  # [osx]
     test:
       commands:
         - test -f ${PREFIX}/lib/libchrono.so  # [linux]
         - test -f ${PREFIX}/lib/libchrono.dylib  # [osx]
   - name: pychrono
+    script: build_python.sh
     requirements:
       build:
         - {{ compiler('c') }}
