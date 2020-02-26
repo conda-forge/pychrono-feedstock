@@ -31,9 +31,18 @@ requirements:
     - python
     - llvm-openmp  # [osx]
 
-test:
-  imports:
-     - pychrono
+outputs:
+  - name: chrono
+    script: build_lib.sh
+    test:
+      commands:
+        - test -f ${PREFIX}/lib/libchrono.so  # [linux]
+        - test -f ${PREFIX}/lib/libchrono.dylib  # [osx]
+  - name: pychrono
+    script: build_python.sh
+    test:
+      imports:
+        - pychrono
 
 about:
   home: https://github.com/projectchrono/chrono
