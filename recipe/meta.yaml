@@ -36,8 +36,8 @@ outputs:
     script: clean_python.sh
     test:
       commands:
-        - test -f ${PREFIX}/lib/libchrono.so  # [linux]
-        - test -f ${PREFIX}/lib/libchrono.dylib  # [osx]
+        - test -f ${PREFIX}/lib/libChronoEngine.so  # [linux]
+        - test -f ${PREFIX}/lib/libChronoEngine.dylib  # [osx]
   - name: pychrono
     test:
       imports:
