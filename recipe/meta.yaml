@@ -33,7 +33,7 @@ requirements:
 
 outputs:
   - name: chrono
-    script: "rm -rf $PREFIX/lib/python*"
+    script: clean_python.sh
     test:
       commands:
         - test -f ${PREFIX}/lib/libchrono.so  # [linux]
