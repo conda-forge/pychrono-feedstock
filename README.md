@@ -95,6 +95,7 @@ Current release info
 
 | Name | Downloads | Version | Platforms |
 | --- | --- | --- | --- |
+| [![Conda Recipe](https://img.shields.io/badge/recipe-chrono-green.svg)](https://anaconda.org/conda-forge/chrono) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/chrono.svg)](https://anaconda.org/conda-forge/chrono) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/chrono.svg)](https://anaconda.org/conda-forge/chrono) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/chrono.svg)](https://anaconda.org/conda-forge/chrono) |
 | [![Conda Recipe](https://img.shields.io/badge/recipe-pychrono-green.svg)](https://anaconda.org/conda-forge/pychrono) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/pychrono.svg)](https://anaconda.org/conda-forge/pychrono) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/pychrono.svg)](https://anaconda.org/conda-forge/pychrono) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/pychrono.svg)](https://anaconda.org/conda-forge/pychrono) |
 
 Installing pychrono
@@ -106,16 +107,16 @@ Installing `pychrono` from the `conda-forge` channel can be achieved by adding `
 conda config --add channels conda-forge
 ```
 
-Once the `conda-forge` channel has been enabled, `pychrono` can be installed with:
+Once the `conda-forge` channel has been enabled, `chrono, pychrono` can be installed with:
 
 ```
-conda install pychrono
+conda install chrono pychrono
 ```
 
-It is possible to list all of the versions of `pychrono` available on your platform with:
+It is possible to list all of the versions of `chrono` available on your platform with:
 
 ```
-conda search pychrono --channel conda-forge
+conda search chrono --channel conda-forge
 ```
 
 
