@@ -37,7 +37,7 @@ outputs:
     script: clean_python.sh
     test:
       commands:
-        - test -f ${PREFIX}/lib/libChronoEngine.${SHLIB_EXT}
+        - test -f ${PREFIX}/lib/libChronoEngine${SHLIB_EXT}
   - name: pychrono
     script: py_install.sh
     requirements:
@@ -73,3 +73,4 @@ extra:
   recipe-maintainers:
     - davidbrochart
     - SylvainCorlay
+    - wolfv
