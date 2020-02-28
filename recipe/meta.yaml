@@ -1,7 +1,7 @@
 {% set name = "chrono" %}
-{% set version = "4.0.0" %}
-{% set build = 4 %}
-{% set sha256 = "803b5089e48334771f652f5bec79f95f2a42cfb02d2ffbaf8ad9e5dca2ba1886" %}
+{% set version = "5.0.0" %}
+{% set build = 1 %}
+{% set sha256 = "edea04cb4bcf62ebd35e617f266379a223a0fb593fc65c39a460b3e20a38e65a" %}
 
 package:
   name: {{ name }}
@@ -37,7 +37,7 @@ outputs:
     script: clean_python.sh
     test:
       commands:
-        - test -f ${PREFIX}/lib/libChronoEngine.${SHLIB_EXT}
+        - test -f ${PREFIX}/lib/libChronoEngine${SHLIB_EXT}
   - name: pychrono
     script: py_install.sh
     requirements:
@@ -73,3 +73,4 @@ extra:
   recipe-maintainers:
     - davidbrochart
     - SylvainCorlay
+    - wolfv
