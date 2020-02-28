@@ -1,6 +1,6 @@
-{% set name = "pychrono" %}
+{% set name = "chrono" %}
 {% set version = "4.0.0" %}
-{% set build = 3 %}
+{% set build = 4 %}
 {% set sha256 = "803b5089e48334771f652f5bec79f95f2a42cfb02d2ffbaf8ad9e5dca2ba1886" %}
 
 package:
@@ -14,6 +14,8 @@ source:
 build:
   number: {{ build }}
   skip: true  # [win or py2k]
+  run_exports:
+    - {{ pin_subpackage('chrono', max_pin='x.x' )}}
 
 requirements:
   build:
@@ -24,16 +26,41 @@ requirements:
     - llvm-openmp  # [osx]
     - libgomp      # [linux and not aarch64]
   host:
-    - python
     - eigen
+    - python
     - llvm-openmp  # [osx]
   run:
-    - python
     - llvm-openmp  # [osx]
 
-test:
-  imports:
-     - pychrono
+outputs:
+  - name: chrono
+    script: clean_python.sh
+    test:
+      commands:
+        - test -f ${PREFIX}/lib/libChronoEngine.${SHLIB_EXT}
+  - name: pychrono
+    script: py_install.sh
+    requirements:
+      build:
+        - {{ compiler('c') }}
+        - {{ compiler('cxx') }}
+        - cmake
+        - swig 3.0.12
+        - llvm-openmp  # [osx]
+        - libgomp      # [linux and not aarch64]
+      host:
+        - {{ pin_subpackage('chrono', exact=True) }}
+        - python
+        - eigen
+        - llvm-openmp  # [osx]
+      run:
+        - {{ pin_subpackage('chrono', exact=True) }}
+        - python
+        - llvm-openmp  # [osx]
+
+    test:
+      imports:
+        - pychrono
 
 about:
   home: https://github.com/projectchrono/chrono
