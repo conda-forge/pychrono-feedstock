@@ -1,6 +1,6 @@
 {% set name = "chrono" %}
 {% set version = "5.0.1" %}
-{% set build = 0 %}
+{% set build = 1 %}
 {% set sha256 = "d98028e6bfdea8d13b4f380913734475f8a0e152dfd6f7cd1c80232a1cf347fd" %}
 
 package:
@@ -15,7 +15,7 @@ build:
   number: {{ build }}
   skip: true  # [win or py2k]
   run_exports:
-    - {{ pin_subpackage('chrono', max_pin='x.x' )}}
+    - {{ pin_subpackage('chrono', max_pin='x.x' ) }}
 
 requirements:
   build:
