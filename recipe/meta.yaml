@@ -1,6 +1,6 @@
 {% set name = "chrono" %}
 {% set version = "5.0.1" %}
-{% set build = 1 %}
+{% set build = 2 %}
 {% set sha256 = "d98028e6bfdea8d13b4f380913734475f8a0e152dfd6f7cd1c80232a1cf347fd" %}
 
 package:
