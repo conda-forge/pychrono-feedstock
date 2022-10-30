@@ -21,6 +21,7 @@ requirements:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
     - cmake
+    - make
     - swig
     - llvm-openmp  # [osx]
     - libgomp      # [linux and not aarch64]
@@ -44,6 +45,7 @@ outputs:
         - {{ compiler('c') }}
         - {{ compiler('cxx') }}
         - cmake
+        - make
         - swig
         - llvm-openmp  # [osx]
         - libgomp      # [linux and not aarch64]
