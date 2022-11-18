@@ -1,7 +1,7 @@
 {% set name = "chrono" %}
-{% set version = "7.0.0" %}
+{% set version = "7.0.2" %}
 {% set build = 0 %}
-{% set sha256 = "3151a800a3e9546134f1eaeb8b186f1ea5270b348b3bd8edc23d19a1f08f3683" %}
+{% set sha256 = "7159162b1a20984464854b68ce19ec470184e795a3c9104bf2a7b6cfdf07949c" %}
 
 package:
   name: {{ name }}
