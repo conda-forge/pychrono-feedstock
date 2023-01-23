@@ -71,6 +71,7 @@ about:
 
 extra:
   recipe-maintainers:
+    - traversaro
     - davidbrochart
     - SylvainCorlay
     - wolfv
