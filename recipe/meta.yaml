@@ -20,6 +20,7 @@ requirements:
     - {{ compiler('c') }}
     - {{ stdlib("c") }}
     - {{ compiler('cxx') }}
+    - make
     - cmake
     - swig 3.0.12
     - llvm-openmp  # [osx]
@@ -37,6 +38,7 @@ outputs:
     test:
       commands:
         - test -f ${PREFIX}/lib/libChronoEngine${SHLIB_EXT}
+
   - name: pychrono
     script: py_install.sh
     requirements:
@@ -44,6 +46,7 @@ outputs:
         - {{ compiler('c') }}
         - {{ stdlib("c") }}
         - {{ compiler('cxx') }}
+        - make
         - cmake
         - swig 3.0.12
         - llvm-openmp  # [osx]
