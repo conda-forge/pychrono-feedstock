@@ -1,6 +1,6 @@
 {% set name = "chrono" %}
 {% set version = "7.0.0" %}
-{% set build = 0 %}
+{% set build = 1 %}
 {% set sha256 = "3151a800a3e9546134f1eaeb8b186f1ea5270b348b3bd8edc23d19a1f08f3683" %}
 
 package:
@@ -20,6 +20,7 @@ build:
 requirements:
   build:
     - {{ compiler('c') }}
+    - {{ stdlib("c") }}
     - {{ compiler('cxx') }}
     - cmake
     - swig 3.0.12
@@ -43,6 +44,7 @@ outputs:
     requirements:
       build:
         - {{ compiler('c') }}
+        - {{ stdlib("c") }}
         - {{ compiler('cxx') }}
         - cmake
         - swig 3.0.12
