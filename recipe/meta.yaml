@@ -1,7 +1,5 @@
 {% set name = "chrono" %}
-{% set version = "7.0.0" %}
-{% set build = 1 %}
-{% set sha256 = "3151a800a3e9546134f1eaeb8b186f1ea5270b348b3bd8edc23d19a1f08f3683" %}
+{% set version = "8.0.0" %}
 
 package:
   name: {{ name }}
@@ -9,13 +7,13 @@ package:
 
 source:
   url: https://github.com/projectchrono/chrono/archive/{{ version }}.tar.gz
-  sha256: {{ sha256 }}
+  sha256: 02219133c149d5d88f66ea58857a112dea9e3fcf682053f58ff8981337406f28
 
 build:
-  number: {{ build }}
-  skip: true  # [win or py2k]
+  number: 0
+  skip: true  # [win]
   run_exports:
-    - {{ pin_subpackage('chrono', max_pin='x.x' ) }}
+    - {{ pin_subpackage('chrono', max_pin='x.x') }}
 
 requirements:
   build:
@@ -66,7 +64,7 @@ outputs:
 
 about:
   home: https://github.com/projectchrono/chrono
-  license: BSD 3-Clause
+  license: BSD-3-Clause
   license_family: BSD
   license_file: LICENSE
   summary: A physics engine for constrained multi-flexible-body dynamics

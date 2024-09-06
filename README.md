@@ -5,7 +5,7 @@ Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/pychrono-feedst
 
 Home: https://github.com/projectchrono/chrono
 
-Package license: BSD 3-Clause
+Package license: BSD-3-Clause
 
 Summary: A physics engine for constrained multi-flexible-body dynamics
 
