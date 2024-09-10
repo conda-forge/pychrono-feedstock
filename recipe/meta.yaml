@@ -45,6 +45,7 @@ outputs:
       build:
         - {{ compiler('c') }}
         - {{ compiler('cxx') }}
+        - {{ stdlib("c") }}
         - cmake
         - swig 4.2.1
         - llvm-openmp  # [osx]
