@@ -22,6 +22,7 @@ requirements:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
     - {{ stdlib("c") }}
+    - make
     - cmake
     - swig 4.2.1
     - llvm-openmp  # [osx]
@@ -46,6 +47,7 @@ outputs:
         - {{ compiler('c') }}
         - {{ compiler('cxx') }}
         - {{ stdlib("c") }}
+        - make
         - cmake
         - swig 4.2.1
         - llvm-openmp  # [osx]
