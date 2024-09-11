@@ -1,0 +1,323 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 6624852e6..7f0caabcb 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -61,11 +61,6 @@ message(STATUS "The host processor is ${CMAKE_HOST_SYSTEM_PROCESSOR}")
+ message(STATUS "Building for a ${CMAKE_SYSTEM_NAME} system")
+ message(STATUS "The target processor is ${CMAKE_SYSTEM_PROCESSOR}")
+ 
+-# Get rid of cmake RPATH warning on OSX
+-if(APPLE)
+-    set(CMAKE_MACOSX_RPATH OFF)
+-endif()
+-
+ #-----------------------------------------------------------------------------
+ # Location of additional CMake scripts
+ #-----------------------------------------------------------------------------
+diff --git a/src/chrono_swig/chrono_python/CMakeLists.txt b/src/chrono_swig/chrono_python/CMakeLists.txt
+index dafd58c9e..c699bcd24 100644
+--- a/src/chrono_swig/chrono_python/CMakeLists.txt
++++ b/src/chrono_swig/chrono_python/CMakeLists.txt
+@@ -41,21 +41,6 @@ if(DEFINED CH_CONDA_INSTALL)
+ 
+ endif()
+ 
+-#-----------------------------------------------------------------------------
+-# CMake policy settings
+-# TODO: switch to new behavior
+-#-----------------------------------------------------------------------------
+-
+-# this to fix warnings about the use of SWIG_MODULE_${mymodulename}_REAL_NAME with CMake version >= 3.13
+-if(POLICY CMP0078)
+-    cmake_policy(SET CMP0078 OLD)
+-endif()
+-
+-# UseSWIG honors SWIG_MODULE_NAME via -module flag.
+-if(POLICY CMP0086)
+-    cmake_policy(SET CMP0086 OLD)
+-endif()
+-
+ #-----------------------------------------------------------------------------
+ # Enable debugging CMake output
+ #-----------------------------------------------------------------------------
+@@ -221,9 +206,9 @@ source_group("wrappers" FILES  ${CHPY_CORE_WRAPPER_FILES})
+ if(${CMAKE_VERSION} VERSION_LESS "3.8.0")
+   SWIG_ADD_MODULE(${CHPY_CORE} python ${CHPY_CORE_MODULE_FILE})
+ else()
+-  SWIG_ADD_LIBRARY(${CHPY_CORE} LANGUAGE python SOURCES ${CHPY_CORE_MODULE_FILE})
++  SWIG_ADD_LIBRARY(${CHPY_CORE} TYPE MODULE LANGUAGE python SOURCES ${CHPY_CORE_MODULE_FILE})
+ endif()
+-SWIG_LINK_LIBRARIES(${CHPY_CORE} ${PYTHON_LIBRARY} ChronoEngine)
++TARGET_LINK_LIBRARIES(${CHPY_CORE} ChronoEngine)
+ 
+ # Ensure that the PYD library file is generated in the bin/ directory.
+ set_target_properties(${SWIG_MODULE_${CHPY_CORE}_REAL_NAME} PROPERTIES
+@@ -249,9 +234,9 @@ add_custom_command(TARGET ${SWIG_MODULE_${CHPY_CORE}_REAL_NAME}
+ 
+ # Install .pyd binary module (.so on linux)
+ install(TARGETS ${SWIG_MODULE_${CHPY_CORE}_REAL_NAME}
+-        RUNTIME DESTINATION "${CH_INSTALL_PYTHON}"
+-        LIBRARY DESTINATION "${CH_INSTALL_PYTHON}"
+-        ARCHIVE DESTINATION "${CH_INSTALL_PYTHON}")
++        RUNTIME DESTINATION "${CH_INSTALL_PYTHON}/${CHPY_PACKAGENAME}"
++        LIBRARY DESTINATION "${CH_INSTALL_PYTHON}/${CHPY_PACKAGENAME}"
++        ARCHIVE DESTINATION "${CH_INSTALL_PYTHON}/${CHPY_PACKAGENAME}")
+ 
+ # Install .py module wrapper
+ install(FILES "${CHPY_CORE_PY_FILE}" DESTINATION "${CH_INSTALL_PYTHON}/${CHPY_PACKAGENAME}")
+@@ -304,9 +289,9 @@ if(ENABLE_MODULE_POSTPROCESS)
+   if(${CMAKE_VERSION} VERSION_LESS "3.8.0")
+     SWIG_ADD_MODULE(${CHPY_POSTPROCESS} python ${CHPY_POSTPROCESS_MODULE_FILE})
+   else()
+-    SWIG_ADD_LIBRARY(${CHPY_POSTPROCESS} LANGUAGE python SOURCES ${CHPY_POSTPROCESS_MODULE_FILE})
++    SWIG_ADD_LIBRARY(${CHPY_POSTPROCESS} TYPE MODULE LANGUAGE python SOURCES ${CHPY_POSTPROCESS_MODULE_FILE})
+   endif()
+-  SWIG_LINK_LIBRARIES(${CHPY_POSTPROCESS} ${PYTHON_LIBRARY} ChronoEngine ChronoEngine_postprocess)
++  TARGET_LINK_LIBRARIES(${CHPY_POSTPROCESS} ChronoEngine ChronoEngine_postprocess)
+ 
+   # Ensure that the PYD library file is generated in the bin/ directory.
+   set_target_properties(${SWIG_MODULE_${CHPY_POSTPROCESS}_REAL_NAME} PROPERTIES
+@@ -335,9 +320,9 @@ if(ENABLE_MODULE_POSTPROCESS)
+ 
+   # Install .pyd binary module (.so on linux)
+   install(TARGETS ${SWIG_MODULE_${CHPY_POSTPROCESS}_REAL_NAME}
+-          RUNTIME DESTINATION "${CH_INSTALL_PYTHON}"
+-          LIBRARY DESTINATION "${CH_INSTALL_PYTHON}"
+-          ARCHIVE DESTINATION "${CH_INSTALL_PYTHON}")
++          RUNTIME DESTINATION "${CH_INSTALL_PYTHON}/${CHPY_PACKAGENAME}"
++          LIBRARY DESTINATION "${CH_INSTALL_PYTHON}/${CHPY_PACKAGENAME}"
++          ARCHIVE DESTINATION "${CH_INSTALL_PYTHON}/${CHPY_PACKAGENAME}")
+   # Install .py module wrapper
+   install(FILES "${CHPY_POSTPROCESS_PY_FILE}" DESTINATION "${CH_INSTALL_PYTHON}/${CHPY_PACKAGENAME}")
+ 
+@@ -373,9 +358,9 @@ endif()
+   if(${CMAKE_VERSION} VERSION_LESS "3.8.0")
+     SWIG_ADD_MODULE(${CHPY_FEA} python ${CHPY_FEA_MODULE_FILE})
+   else()
+-    SWIG_ADD_LIBRARY(${CHPY_FEA} LANGUAGE python SOURCES ${CHPY_FEA_MODULE_FILE})
++    SWIG_ADD_LIBRARY(${CHPY_FEA} TYPE MODULE LANGUAGE python SOURCES ${CHPY_FEA_MODULE_FILE})
+   endif()
+-SWIG_LINK_LIBRARIES(${CHPY_FEA} ${PYTHON_LIBRARY} ChronoEngine)
++TARGET_LINK_LIBRARIES(${CHPY_FEA} ChronoEngine)
+ 
+   # Ensure that the PYD library file is generated in the bin/ directory.
+   set_target_properties(${SWIG_MODULE_${CHPY_FEA}_REAL_NAME} PROPERTIES
+@@ -403,9 +388,9 @@ SWIG_LINK_LIBRARIES(${CHPY_FEA} ${PYTHON_LIBRARY} ChronoEngine)
+ 
+   # Install .pyd binary module (.so on linux)
+   install(TARGETS ${SWIG_MODULE_${CHPY_FEA}_REAL_NAME}
+-          RUNTIME DESTINATION "${CH_INSTALL_PYTHON}"
+-          LIBRARY DESTINATION "${CH_INSTALL_PYTHON}"
+-          ARCHIVE DESTINATION "${CH_INSTALL_PYTHON}")
++          RUNTIME DESTINATION "${CH_INSTALL_PYTHON}/${CHPY_PACKAGENAME}"
++          LIBRARY DESTINATION "${CH_INSTALL_PYTHON}/${CHPY_PACKAGENAME}"
++          ARCHIVE DESTINATION "${CH_INSTALL_PYTHON}/${CHPY_PACKAGENAME}")
+   # Install .py module wrapper
+   install(FILES "${CHPY_FEA_PY_FILE}" DESTINATION "${CH_INSTALL_PYTHON}/${CHPY_PACKAGENAME}")
+ 
+@@ -441,9 +426,9 @@ if(ENABLE_MODULE_IRRLICHT)
+   if(${CMAKE_VERSION} VERSION_LESS "3.8.0")
+     SWIG_ADD_MODULE(${CHPY_IRRLICHT} python ${CHPY_IRRLICHT_MODULE_FILE})
+   else()
+-    SWIG_ADD_LIBRARY(${CHPY_IRRLICHT} LANGUAGE python SOURCES ${CHPY_IRRLICHT_MODULE_FILE})
++    SWIG_ADD_LIBRARY(${CHPY_IRRLICHT} TYPE MODULE LANGUAGE python SOURCES ${CHPY_IRRLICHT_MODULE_FILE})
+   endif()
+-  SWIG_LINK_LIBRARIES(${CHPY_IRRLICHT} ${PYTHON_LIBRARY} ChronoEngine ChronoEngine_irrlicht)
++  TARGET_LINK_LIBRARIES(${CHPY_IRRLICHT} ChronoEngine ChronoEngine_irrlicht)
+ 
+   # Ensure that the PYD library file is generated in the bin/ directory.
+   set_target_properties(${SWIG_MODULE_${CHPY_IRRLICHT}_REAL_NAME} PROPERTIES
+@@ -473,9 +458,9 @@ if(ENABLE_MODULE_IRRLICHT)
+ 
+   # Install .pyd binary module (.so on linux)
+   install(TARGETS ${SWIG_MODULE_${CHPY_IRRLICHT}_REAL_NAME}
+-          RUNTIME DESTINATION "${CH_INSTALL_PYTHON}"
+-          LIBRARY DESTINATION "${CH_INSTALL_PYTHON}"
+-          ARCHIVE DESTINATION "${CH_INSTALL_PYTHON}")
++          RUNTIME DESTINATION "${CH_INSTALL_PYTHON}/${CHPY_PACKAGENAME}"
++          LIBRARY DESTINATION "${CH_INSTALL_PYTHON}/${CHPY_PACKAGENAME}"
++          ARCHIVE DESTINATION "${CH_INSTALL_PYTHON}/${CHPY_PACKAGENAME}")
+   # Install .py module wrapper
+   install(FILES "${CHPY_IRRLICHT_PY_FILE}" DESTINATION "${CH_INSTALL_PYTHON}/${CHPY_PACKAGENAME}")
+ 
+@@ -516,9 +501,9 @@ if(ENABLE_MODULE_PARDISO_MKL)
+   if(${CMAKE_VERSION} VERSION_LESS "3.8.0")
+     SWIG_ADD_MODULE(${CHPY_MKL} python ${CHPY_MKL_MODULE_FILE})
+   else()
+-    SWIG_ADD_LIBRARY(${CHPY_MKL} LANGUAGE python SOURCES ${CHPY_MKL_MODULE_FILE})
++    SWIG_ADD_LIBRARY(${CHPY_MKL} TYPE MODULE LANGUAGE python SOURCES ${CHPY_MKL_MODULE_FILE})
+   endif()
+-  SWIG_LINK_LIBRARIES(${CHPY_MKL} ${PYTHON_LIBRARY} ChronoEngine ChronoEngine_pardisomkl)
++  TARGET_LINK_LIBRARIES(${CHPY_MKL} ChronoEngine ChronoEngine_pardisomkl)
+ 
+   # Ensure that the PYD library file is generated in the bin/ directory.
+   set_target_properties(${SWIG_MODULE_${CHPY_MKL}_REAL_NAME} PROPERTIES
+@@ -547,9 +532,9 @@ if(ENABLE_MODULE_PARDISO_MKL)
+ 
+   # Install .pyd binary module (.so on linux)
+   install(TARGETS ${SWIG_MODULE_${CHPY_MKL}_REAL_NAME}
+-          RUNTIME DESTINATION "${CH_INSTALL_PYTHON}"
+-          LIBRARY DESTINATION "${CH_INSTALL_PYTHON}"
+-          ARCHIVE DESTINATION "${CH_INSTALL_PYTHON}")
++          RUNTIME DESTINATION "${CH_INSTALL_PYTHON}/${CHPY_PACKAGENAME}"
++          LIBRARY DESTINATION "${CH_INSTALL_PYTHON}/${CHPY_PACKAGENAME}"
++          ARCHIVE DESTINATION "${CH_INSTALL_PYTHON}/${CHPY_PACKAGENAME}")
+   # Install .py module wrapper
+   install(FILES "${CHPY_MKL_PY_FILE}" DESTINATION "${CH_INSTALL_PYTHON}/${CHPY_PACKAGENAME}")
+ 
+@@ -587,9 +572,9 @@ if(ENABLE_MODULE_CASCADE)
+   if(${CMAKE_VERSION} VERSION_LESS "3.8.0")
+     SWIG_ADD_MODULE(${CHPY_CASCADE} python ${CHPY_CASCADE_MODULE_FILE})
+   else()
+-    SWIG_ADD_LIBRARY(${CHPY_CASCADE} LANGUAGE python SOURCES ${CHPY_CASCADE_MODULE_FILE})
++    SWIG_ADD_LIBRARY(${CHPY_CASCADE} TYPE MODULE LANGUAGE python SOURCES ${CHPY_CASCADE_MODULE_FILE})
+   endif()
+-  SWIG_LINK_LIBRARIES(${CHPY_CASCADE} ${PYTHON_LIBRARY} ChronoEngine ChronoEngine_cascade)
++  TARGET_LINK_LIBRARIES($SWIG_MODULE_${CHPY_CASCADE} ChronoEngine ChronoEngine_cascade)
+ 
+   IF(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
+     ADD_DEFINITIONS( "/DWNT" )
+@@ -629,9 +614,9 @@ if(ENABLE_MODULE_CASCADE)
+ 
+   # Install .pyd binary module (.so on linux)
+   install(TARGETS ${SWIG_MODULE_${CHPY_CASCADE}_REAL_NAME}
+-          RUNTIME DESTINATION "${CH_INSTALL_PYTHON}"
+-          LIBRARY DESTINATION "${CH_INSTALL_PYTHON}"
+-          ARCHIVE DESTINATION "${CH_INSTALL_PYTHON}")
++          RUNTIME DESTINATION "${CH_INSTALL_PYTHON}/${CHPY_PACKAGENAME}"
++          LIBRARY DESTINATION "${CH_INSTALL_PYTHON}/${CHPY_PACKAGENAME}"
++          ARCHIVE DESTINATION "${CH_INSTALL_PYTHON}/${CHPY_PACKAGENAME}")
+   # Install .py module wrapper
+   install(FILES "${CHPY_CASCADE_PY_FILE}" DESTINATION "${CH_INSTALL_PYTHON}/${CHPY_PACKAGENAME}")
+ 
+@@ -674,13 +659,13 @@ if(ENABLE_MODULE_VEHICLE AND ENABLE_MODULE_VEHICLE_MODELS)
+   if(${CMAKE_VERSION} VERSION_LESS "3.8.0")
+     SWIG_ADD_MODULE(${CHPY_VEHICLE} python ${CHPY_VEHICLE_MODULE_FILE})
+   else()
+-    SWIG_ADD_LIBRARY(${CHPY_VEHICLE} LANGUAGE python SOURCES ${CHPY_VEHICLE_MODULE_FILE})
++    SWIG_ADD_LIBRARY(${CHPY_VEHICLE} TYPE MODULE LANGUAGE python SOURCES ${CHPY_VEHICLE_MODULE_FILE})
+   endif()
+-  SWIG_LINK_LIBRARIES(${CHPY_VEHICLE} ${PYTHON_LIBRARY} ChronoEngine ChronoEngine_vehicle)
++  TARGET_LINK_LIBRARIES(${CHPY_VEHICLE} ChronoEngine ChronoEngine_vehicle)
+   if(ENABLE_MODULE_IRRLICHT)
+-    SWIG_LINK_LIBRARIES(${CHPY_VEHICLE} ${PYTHON_LIBRARY} ChronoEngine ChronoEngine_vehicle_irrlicht)
++    TARGET_LINK_LIBRARIES(${CHPY_VEHICLE} ChronoEngine ChronoEngine_vehicle_irrlicht)
+   endif()
+-  SWIG_LINK_LIBRARIES(${CHPY_VEHICLE} ${PYTHON_LIBRARY} ChronoEngine ChronoModels_vehicle)
++  TARGET_LINK_LIBRARIES(${CHPY_VEHICLE} ChronoEngine ChronoModels_vehicle)
+ 
+   IF(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
+     ADD_DEFINITIONS( "/DWNT" )
+@@ -724,9 +709,9 @@ if(ENABLE_MODULE_VEHICLE AND ENABLE_MODULE_VEHICLE_MODELS)
+ 
+   # Install .pyd binary module (.so on linux)
+   install(TARGETS ${SWIG_MODULE_${CHPY_VEHICLE}_REAL_NAME}
+-          RUNTIME DESTINATION "${CH_INSTALL_PYTHON}"
+-          LIBRARY DESTINATION "${CH_INSTALL_PYTHON}"
+-          ARCHIVE DESTINATION "${CH_INSTALL_PYTHON}")
++          RUNTIME DESTINATION "${CH_INSTALL_PYTHON}/${CHPY_PACKAGENAME}"
++          LIBRARY DESTINATION "${CH_INSTALL_PYTHON}/${CHPY_PACKAGENAME}"
++          ARCHIVE DESTINATION "${CH_INSTALL_PYTHON}/${CHPY_PACKAGENAME}")
+   # Install .py module wrapper
+   install(FILES "${CHPY_VEHICLE_PY_FILE}" DESTINATION "${CH_INSTALL_PYTHON}/${CHPY_PACKAGENAME}")
+ 
+@@ -777,9 +762,9 @@ if(ENABLE_MODULE_SENSOR AND NUMPY_INCLUDE_DIR)
+   if(${CMAKE_VERSION} VERSION_LESS "3.8.0")
+     SWIG_ADD_MODULE(${CHPY_SENSOR} python ${CHPY_SENSOR_MODULE_FILE})
+   else()
+-    SWIG_ADD_LIBRARY(${CHPY_SENSOR} LANGUAGE python SOURCES ${CHPY_SENSOR_MODULE_FILE})
++    SWIG_ADD_LIBRARY(${CHPY_SENSOR} TYPE MODULE LANGUAGE python SOURCES ${CHPY_SENSOR_MODULE_FILE})
+   endif()
+-  SWIG_LINK_LIBRARIES(${CHPY_SENSOR} ${PYTHON_LIBRARY} ChronoEngine ChronoEngine_sensor ${SENSOR_LIBRARIES})
++  TARGET_LINK_LIBRARIES(${CHPY_SENSOR} ChronoEngine ChronoEngine_sensor ${SENSOR_LIBRARIES})
+ 
+   # Ensure that the PYD library file is generated in the bin/ directory.
+   set_target_properties(${SWIG_MODULE_${CHPY_SENSOR}_REAL_NAME} PROPERTIES
+@@ -806,9 +791,9 @@ if(ENABLE_MODULE_SENSOR AND NUMPY_INCLUDE_DIR)
+ 
+   # Install .pyd binary module (.so on linux)
+   install(TARGETS ${SWIG_MODULE_${CHPY_SENSOR}_REAL_NAME}
+-          RUNTIME DESTINATION "${CH_INSTALL_PYTHON}"
+-          LIBRARY DESTINATION "${CH_INSTALL_PYTHON}"
+-          ARCHIVE DESTINATION "${CH_INSTALL_PYTHON}")
++          RUNTIME DESTINATION "${CH_INSTALL_PYTHON}/${CHPY_PACKAGENAME}"
++          LIBRARY DESTINATION "${CH_INSTALL_PYTHON}/${CHPY_PACKAGENAME}"
++          ARCHIVE DESTINATION "${CH_INSTALL_PYTHON}/${CHPY_PACKAGENAME}")
+   # Install .py module wrapper
+   install(FILES "${CHPY_SENSOR_PY_FILE}" DESTINATION "${CH_INSTALL_PYTHON}/${CHPY_PACKAGENAME}")
+ 
+@@ -844,9 +829,9 @@ endif()
+   if(${CMAKE_VERSION} VERSION_LESS "3.8.0")
+     SWIG_ADD_MODULE(${CHPY_RS} python ${CHPY_ROBOT_MODULE_FILE})
+   else()
+-    SWIG_ADD_LIBRARY(${CHPY_RS} LANGUAGE python SOURCES ${CHPY_ROBOT_MODULE_FILE})
++    SWIG_ADD_LIBRARY(${CHPY_RS} TYPE MODULE LANGUAGE python SOURCES ${CHPY_ROBOT_MODULE_FILE})
+   endif()
+-  SWIG_LINK_LIBRARIES(${CHPY_RS} ${PYTHON_LIBRARY} ChronoEngine ChronoModels_robot)
++  TARGET_LINK_LIBRARIES(${CHPY_RS} ChronoEngine ChronoModels_robot)
+ 
+   IF(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
+     ADD_DEFINITIONS( "/DWNT" )
+@@ -885,9 +870,9 @@ endif()
+ 
+   # Install .pyd binary module (.so on linux)
+   install(TARGETS ${SWIG_MODULE_${CHPY_RS}_REAL_NAME}
+-          RUNTIME DESTINATION "${CH_INSTALL_PYTHON}"
+-          LIBRARY DESTINATION "${CH_INSTALL_PYTHON}"
+-          ARCHIVE DESTINATION "${CH_INSTALL_PYTHON}")
++          RUNTIME DESTINATION "${CH_INSTALL_PYTHON}/${CHPY_PACKAGENAME}"
++          LIBRARY DESTINATION "${CH_INSTALL_PYTHON}/${CHPY_PACKAGENAME}"
++          ARCHIVE DESTINATION "${CH_INSTALL_PYTHON}/${CHPY_PACKAGENAME}")
+   # Install .py module wrapper
+   install(FILES "${CHPY_VEHICLE_PY_FILE}" DESTINATION "${CH_INSTALL_PYTHON}/${CHPY_PACKAGENAME}")
+ 
+@@ -915,9 +900,9 @@ if(ENABLE_MODULE_PARSERS AND HAVE_URDF)
+   if(${CMAKE_VERSION} VERSION_LESS "3.8.0")
+     SWIG_ADD_MODULE(${CHPY_PARSERS} python ${CHPY_PARSERS_MODULE_FILE})
+   else()
+-    SWIG_ADD_LIBRARY(${CHPY_PARSERS} LANGUAGE python SOURCES ${CHPY_PARSERS_MODULE_FILE})
++    SWIG_ADD_LIBRARY(${CHPY_PARSERS} TYPE MODULE LANGUAGE python SOURCES ${CHPY_PARSERS_MODULE_FILE})
+   endif()
+-  SWIG_LINK_LIBRARIES(${CHPY_PARSERS} ${PYTHON_LIBRARY} ChronoEngine ChronoEngine_parsers)
++  TARGET_LINK_LIBRARIES(${CHPY_PARSERS} ChronoEngine ChronoEngine_parsers)
+ 
+   IF(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
+     ADD_DEFINITIONS( "/DWNT" )
+@@ -953,9 +938,9 @@ if(ENABLE_MODULE_PARSERS AND HAVE_URDF)
+ 
+   # Install .pyd binary module (.so on linux)
+   install(TARGETS ${SWIG_MODULE_${CHPY_PARSERS}_REAL_NAME}
+-          RUNTIME DESTINATION "${CH_INSTALL_PYTHON}"
+-          LIBRARY DESTINATION "${CH_INSTALL_PYTHON}"
+-          ARCHIVE DESTINATION "${CH_INSTALL_PYTHON}")
++          RUNTIME DESTINATION "${CH_INSTALL_PYTHON}/${CHPY_PACKAGENAME}"
++          LIBRARY DESTINATION "${CH_INSTALL_PYTHON}/${CHPY_PACKAGENAME}"
++          ARCHIVE DESTINATION "${CH_INSTALL_PYTHON}/${CHPY_PACKAGENAME}")
+   # Install .py module wrapper
+   install(FILES "${CHPY_PARSERS_PY_FILE}" DESTINATION "${CH_INSTALL_PYTHON}/${CHPY_PACKAGENAME}")
+ 
+@@ -1009,9 +994,9 @@ if(ENABLE_MODULE_ROS)
+   if(${CMAKE_VERSION} VERSION_LESS "3.8.0")
+     SWIG_ADD_MODULE(${CHPY_ROS} python ${CHPY_ROS_MODULE_FILE})
+   else()
+-    SWIG_ADD_LIBRARY(${CHPY_ROS} LANGUAGE python SOURCES ${CHPY_ROS_MODULE_FILE})
++    SWIG_ADD_LIBRARY(${CHPY_ROS} TYPE MODULE LANGUAGE python SOURCES ${CHPY_ROS_MODULE_FILE})
+   endif()
+-  SWIG_LINK_LIBRARIES(${CHPY_ROS} ${PYTHON_LIBRARY} ChronoEngine ChronoEngine_ros)
++  TARGET_LINK_LIBRARIES(${CHPY_ROS} ChronoEngine ChronoEngine_ros)
+ 
+   IF(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
+     ADD_DEFINITIONS( "/DWNT" )
+@@ -1047,9 +1032,9 @@ if(ENABLE_MODULE_ROS)
+ 
+   # Install .pyd binary module (.so on linux)
+   install(TARGETS ${SWIG_MODULE_${CHPY_ROS}_REAL_NAME}
+-          RUNTIME DESTINATION "${CH_INSTALL_PYTHON}"
+-          LIBRARY DESTINATION "${CH_INSTALL_PYTHON}"
+-          ARCHIVE DESTINATION "${CH_INSTALL_PYTHON}")
++          RUNTIME DESTINATION "${CH_INSTALL_PYTHON}/${CHPY_PACKAGENAME}"
++          LIBRARY DESTINATION "${CH_INSTALL_PYTHON}/${CHPY_PACKAGENAME}"
++          ARCHIVE DESTINATION "${CH_INSTALL_PYTHON}/${CHPY_PACKAGENAME}")
+   # Install .py module wrapper
+   install(FILES "${CHPY_ROS_PY_FILE}" DESTINATION "${CH_INSTALL_PYTHON}/${CHPY_PACKAGENAME}")
+ 
