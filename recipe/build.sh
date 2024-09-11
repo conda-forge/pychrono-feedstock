@@ -10,7 +10,6 @@ fi
 
 if [ `uname` == Darwin ]; then
     PY_LIB="libpython${HOST_PY_VER}.dylib"
-    sed -i '' 's/${PYTHON_LIBRARY}//g' $SRC_DIR/src/chrono_python/CMakeLists.txt
     sed -i '' 's/find_package(AVX)//g' $SRC_DIR/src/CMakeLists.txt
     sed -i '' 's/find_package(SSE)//g' $SRC_DIR/src/CMakeLists.txt
     sed -i '' 's/find_package(NEON)//g' $SRC_DIR/src/CMakeLists.txt
