@@ -10,6 +10,8 @@ package:
 source:
   url: https://github.com/projectchrono/chrono/archive/{{ version }}.tar.gz
   sha256: {{ sha256 }}
+  patches:
+    - patches/osx_swig.patch
 
 build:
   number: {{ build }}
