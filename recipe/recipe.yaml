@@ -73,6 +73,8 @@ outputs:
         - python
         - if: osx
           then: llvm-openmp
+        - if: win
+          then: posix
       run:
         - ${{ pin_subpackage('chrono', exact=True) }}
         - python
