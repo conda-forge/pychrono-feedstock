@@ -41,6 +41,8 @@ outputs:
         - python
         - if: osx
           then: llvm-openmp
+        - if: win
+          then: posix
       run:
         - if: osx
           then: llvm-openmp
