@@ -47,7 +47,9 @@ outputs:
       run_exports:
         - ${{ pin_subpackage('chrono', upper_bound='x.x' ) }}
     build:
-      script: bash build_chrono.sh
+      script:
+        file: build_chrono.sh
+        interpreter: bash
     tests:
       - script:
           - test -f ${PREFIX}/lib/libChronoEngine${SHLIB_EXT}
@@ -85,7 +87,9 @@ outputs:
           imports:
             - pychrono
     build:
-      script: bash build_pychrono.sh
+      script:
+        file: build_pychrono.sh
+        interpreter: bash
 
 about:
   license: BSD-3-Clause
