@@ -77,6 +77,7 @@ about:
 
 extra:
   recipe-maintainers:
+    - oursland
     - davidbrochart
     - SylvainCorlay
     - wolfv
