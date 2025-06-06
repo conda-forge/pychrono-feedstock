@@ -55,7 +55,10 @@ outputs:
           else: build_chrono.sh
     tests:
       - script:
-          - test -f ${PREFIX}/lib/libChronoEngine${SHLIB_EXT}
+        - if: win
+          then: test -f ${PREFIX}/lib/ChronoEngine${SHLIB_EXT}
+          else: test -f ${PREFIX}/lib/libChronoEngine${SHLIB_EXT}
+
   - package:
       name: pychrono
     requirements:
