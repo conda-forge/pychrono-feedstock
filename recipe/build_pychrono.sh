@@ -6,7 +6,9 @@ set -x
 unset CMAKE_GENERATOR
 unset CMAKE_GENERATOR_PLATFORM
 
-export LDFLAGS="-Wl,-undefined,dynamic_lookup ${LDFLAGS}"
+if [[ ${HOST} =~ .*darwin.* ]]; then
+      export LDFLAGS="-Wl,-undefined,dynamic_lookup ${LDFLAGS}"
+fi
 
 # Configure step
 cmake ${CMAKE_ARGS} \
