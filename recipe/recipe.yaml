@@ -50,8 +50,9 @@ outputs:
         - ${{ pin_subpackage('chrono', upper_bound='x.x' ) }}
     build:
       script:
-        file: build_chrono.sh
-        interpreter: bash
+        - if: win
+          then: build_chrono.bat
+          else: build_chrono.sh
     tests:
       - script:
           - test -f ${PREFIX}/lib/libChronoEngine${SHLIB_EXT}
@@ -90,8 +91,9 @@ outputs:
             - pychrono
     build:
       script:
-        file: build_pychrono.sh
-        interpreter: bash
+        - if: win
+          then: build_pychrono.bat
+          else: build_pychrono.sh
 
 about:
   license: BSD-3-Clause
