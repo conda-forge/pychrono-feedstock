@@ -1,0 +1,115 @@
+schema_version: 1
+
+context:
+  name: chrono
+  version: 9.0.1
+  build: 2
+  sha256: 86da726ed3e3bacf682666b21d9c95dc87746b026dbafc722051a3202b822d39
+
+recipe:
+  name: ${{ name }}
+  version: ${{ version }}
+
+source:
+  url: https://github.com/projectchrono/chrono/archive/${{ version }}.tar.gz
+  sha256: ${{ sha256 }}
+  patches:
+    - patches/osx_swig.patch
+
+build:
+  number: ${{ build }}
+  skip:
+  - win
+
+outputs:
+  - package:
+      name: chrono
+    requirements:
+      build:
+        - ${{ compiler('c') }}
+        - ${{ compiler('cxx') }}
+        - ${{ stdlib("c") }}
+        - cmake
+        - ninja
+        - swig >=4.2,<4.3
+        - if: linux and not aarch64
+          then: libgomp
+        - if: osx
+          then: llvm-openmp
+        - if: win
+          then: posix
+      host:
+        - eigen
+        - python
+        - if: osx
+          then: llvm-openmp
+        - if: win
+          then: posix
+      run:
+        - if: osx
+          then: llvm-openmp
+      run_exports:
+        - ${{ pin_subpackage('chrono', upper_bound='x.x' ) }}
+    build:
+      script:
+        - if: win
+          then: build_chrono.bat
+          else: build_chrono.sh
+    tests:
+      - script:
+        - if: win
+          then: test -f ${PREFIX}/lib/ChronoEngine${SHLIB_EXT}
+          else: test -f ${PREFIX}/lib/libChronoEngine${SHLIB_EXT}
+
+  - package:
+      name: pychrono
+    requirements:
+      build:
+        - ${{ compiler('c') }}
+        - ${{ compiler('cxx') }}
+        - ${{ stdlib("c") }}
+        - cmake
+        - ninja
+        - swig >=4.2,<4.3
+        - if: linux and not aarch64
+          then: libgomp
+        - if: osx
+          then: llvm-openmp
+        - if: win
+          then: posix
+      host:
+        - ${{ pin_subpackage('chrono', exact=True) }}
+        - eigen
+        - python
+        - if: osx
+          then: llvm-openmp
+        - if: win
+          then: posix
+      run:
+        - ${{ pin_subpackage('chrono', exact=True) }}
+        - python
+        - if: osx
+          then: llvm-openmp
+    tests:
+      - python:
+          imports:
+            - pychrono
+    build:
+      script:
+        - if: win
+          then: build_pychrono.bat
+          else: build_pychrono.sh
+
+about:
+  license: BSD-3-Clause
+  license_file: LICENSE
+  summary: A physics engine for constrained multi-flexible-body dynamics
+  homepage: https://github.com/projectchrono/chrono
+
+extra:
+  recipe-maintainers:
+    - traversaro
+    - oursland
+    - davidbrochart
+    - SylvainCorlay
+    - wolfv
