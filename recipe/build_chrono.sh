@@ -8,17 +8,19 @@ unset CMAKE_GENERATOR_PLATFORM
 
 if [[ ${HOST} =~ .*darwin.* ]]; then
       export LDFLAGS="-Wl,-undefined,dynamic_lookup ${LDFLAGS}"
-fi
 
 if [[ ${HOST} =~ .*mingw.* ]]; then
-      export EIGEN3_INC_PATH=${LIBRARY_INC}/eigen3
+      export EIGEN3_OPTS="-DEigen3_DIR:PATH=${PREFIX}/Library/share/eigen3/cmake"
 else
-      export EIGEN3_INC_PATH=${PREFIX}/include/eigen3
+      export EIGEN3_OPTS=""
 fi
+
+fi
+
 
 # Configure step
 cmake ${CMAKE_ARGS} \
-      -DEIGEN3_INCLUDE_DIR:PATH=${EIGEN3_INC_PATH} \
+      ${EIGEN3_OPTS} \
       -G Ninja \
       -B build \
       -DBUILD_DEMOS:BOOL=OFF \
