@@ -37,16 +37,15 @@ outputs:
         - if: osx
           then: llvm-openmp
         - if: win
-          then: m2-base
+          then: posix
       host:
         - eigen
         - python
         - if: osx
           then: llvm-openmp
         - if: win
-          then: m2-base
+          then: posix
       run:
-        - eigen
         - if: osx
           then: llvm-openmp
       run_exports:
@@ -76,14 +75,14 @@ outputs:
         - if: osx
           then: llvm-openmp
         - if: win
-          then: m2-base
+          then: posix
       host:
         - ${{ pin_subpackage('chrono', exact=True) }}
         - opencascade
         - if: osx
           then: llvm-openmp
         - if: win
-          then: m2-base
+          then: posix
       run:
         - ${{ pin_subpackage('chrono', exact=True) }}
         - if: osx
@@ -113,7 +112,7 @@ outputs:
         - if: osx
           then: llvm-openmp
         - if: win
-          then: m2-base
+          then: posix
       host:
         - ${{ pin_subpackage('chrono', exact=True) }}
         - ros-humble-rclcpp
@@ -126,7 +125,7 @@ outputs:
         - if: osx
           then: llvm-openmp
         - if: win
-          then: m2-base
+          then: posix
       run:
         - ${{ pin_subpackage('chrono', exact=True) }}
         - if: osx
@@ -157,7 +156,7 @@ outputs:
         - if: osx
           then: llvm-openmp
         - if: win
-          then: m2-base
+          then: posix
       host:
         - ${{ pin_subpackage('chrono', exact=True) }}
         - eigen
@@ -165,7 +164,7 @@ outputs:
         - if: osx
           then: llvm-openmp
         - if: win
-          then: m2-base
+          then: posix
       run:
         - ${{ pin_subpackage('chrono', exact=True) }}
         - python

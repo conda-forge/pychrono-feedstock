@@ -19,7 +19,6 @@ fi
 
 # Configure step
 cmake ${CMAKE_ARGS} \
-      -DEIGEN3_INCLUDE_DIR:PATH=${EIGEN3_INC_PATH} \
       -G Ninja \
       -B build \
       -DBUILD_DEMOS:BOOL=OFF \
