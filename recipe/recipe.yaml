@@ -60,7 +60,7 @@ outputs:
     tests:
       - script:
         - if: win
-          then: test -f ${PREFIX}/lib/ChronoEngine${SHLIB_EXT}
+          then: if not exist %PREFIX%\Library\lib\ChronoEngine.lib exit 1
           else: test -f ${PREFIX}/lib/libChronoEngine${SHLIB_EXT}
 
   - package:
