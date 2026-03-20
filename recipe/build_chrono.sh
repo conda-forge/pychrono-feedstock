@@ -10,8 +10,15 @@ if [[ ${HOST} =~ .*darwin.* ]]; then
       export LDFLAGS="-Wl,-undefined,dynamic_lookup ${LDFLAGS}"
 fi
 
+if [[ ${HOST} =~ .*mingw.* ]]; then
+      export EIGEN3_INC_PATH=${LIBRARY_INC}/eigen3
+else
+      export EIGEN3_INC_PATH=${PREFIX}/include/eigen3
+fi
+
 # Configure step
 cmake ${CMAKE_ARGS} \
+      -DEIGEN3_INCLUDE_DIR:PATH=${EIGEN3_INC_PATH} \
       -G Ninja \
       -B build \
       -DBUILD_DEMOS:BOOL=OFF \

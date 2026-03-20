@@ -35,15 +35,16 @@ outputs:
         - if: osx
           then: llvm-openmp
         - if: win
-          then: posix
+          then: m2-base
       host:
         - eigen
         - python
         - if: osx
           then: llvm-openmp
         - if: win
-          then: posix
+          then: m2-base
       run:
+        - eigen
         - if: osx
           then: llvm-openmp
       run_exports:
@@ -74,7 +75,7 @@ outputs:
         - if: osx
           then: llvm-openmp
         - if: win
-          then: posix
+          then: m2-base
       host:
         - ${{ pin_subpackage('chrono', exact=True) }}
         - eigen
@@ -82,7 +83,7 @@ outputs:
         - if: osx
           then: llvm-openmp
         - if: win
-          then: posix
+          then: m2-base
       run:
         - ${{ pin_subpackage('chrono', exact=True) }}
         - python
