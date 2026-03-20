@@ -62,6 +62,86 @@ outputs:
           else: test -f ${PREFIX}/lib/libChronoEngine${SHLIB_EXT}
 
   - package:
+      name: chrono-cascade
+    requirements:
+      build:
+        - ${{ compiler('c') }}
+        - ${{ compiler('cxx') }}
+        - ${{ stdlib("c") }}
+        - cmake
+        - ninja
+        - if: linux and not aarch64
+          then: libgomp
+        - if: osx
+          then: llvm-openmp
+        - if: win
+          then: posix
+      host:
+        - ${{ pin_subpackage('chrono', exact=True) }}
+        - opencascade
+        - if: osx
+          then: llvm-openmp
+        - if: win
+          then: posix
+      run:
+        - ${{ pin_subpackage('chrono', exact=True) }}
+        - if: osx
+          then: llvm-openmp
+    build:
+      script:
+        - if: win
+          then: build_cascade.bat
+          else: build_cascade.sh
+    tests:
+      - script:
+        - if: win
+          then: test -f ${PREFIX}/lib/ChronoEngine_cascade${SHLIB_EXT}
+          else: test -f ${PREFIX}/lib/libChronoEngine_cascade${SHLIB_EXT}
+
+  - package:
+      name: chrono-ros
+    requirements:
+      build:
+        - ${{ compiler('c') }}
+        - ${{ compiler('cxx') }}
+        - ${{ stdlib("c") }}
+        - cmake
+        - ninja
+        - if: linux and not aarch64
+          then: libgomp
+        - if: osx
+          then: llvm-openmp
+        - if: win
+          then: posix
+      host:
+        - ${{ pin_subpackage('chrono', exact=True) }}
+        - ros-humble-rclcpp
+        - ros-humble-std-msgs
+        - ros-humble-sensor-msgs
+        - ros-humble-nav-msgs
+        - ros-humble-geometry-msgs
+        - ros-humble-tf2
+        - ros-humble-tf2-ros
+        - if: osx
+          then: llvm-openmp
+        - if: win
+          then: posix
+      run:
+        - ${{ pin_subpackage('chrono', exact=True) }}
+        - if: osx
+          then: llvm-openmp
+    build:
+      script:
+        - if: win
+          then: build_ros.bat
+          else: build_ros.sh
+    tests:
+      - script:
+        - if: win
+          then: test -f ${PREFIX}/lib/ChronoEngine_ros${SHLIB_EXT}
+          else: test -f ${PREFIX}/lib/libChronoEngine_ros${SHLIB_EXT}
+
+  - package:
       name: pychrono
     requirements:
       build:
