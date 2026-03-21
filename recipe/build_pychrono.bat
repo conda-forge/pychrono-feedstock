@@ -8,7 +8,7 @@ cmake %CMAKE_ARGS% ^
       -B build ^
       -DBUILD_DEMOS:BOOL=OFF ^
       -DCH_CONDA_INSTALL:BOOL=ON ^
-      -DCH_INSTALL_PYTHON_PACKAGE="lib/python%PY_VER%/site-packages" ^
+      -DCH_INSTALL_PYTHON_PACKAGE="../Lib/site-packages" ^
       -DCH_PYCHRONO_DATA_PATH:PATH=data ^
       -DCH_PYCHRONO_SHADER_PATH:PATH=shader ^
       -DENABLE_MODULE_CASCADE:BOOL=OFF ^
