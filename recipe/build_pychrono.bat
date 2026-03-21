@@ -1,5 +1,8 @@
 @echo on
 
+:: Ensure the MSVC linker can find python3xx.lib which conda puts in %PREFIX%\libs
+set "LIB=%PREFIX%\libs;%LIB%"
+
 cmake %CMAKE_ARGS% ^
       -B build ^
       -DBUILD_DEMOS:BOOL=OFF ^
