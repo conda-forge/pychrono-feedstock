@@ -15,7 +15,6 @@ source:
   sha256: ${{ sha256 }}
   patches:
     - patches/osx_swig.patch
-    - patches/eigen5_version.patch
 
 build:
   number: ${{ build }}
@@ -38,16 +37,15 @@ outputs:
         - if: osx
           then: llvm-openmp
         - if: win
-          then: m2-base
+          then: posix
       host:
         - eigen
         - python
         - if: osx
           then: llvm-openmp
         - if: win
-          then: m2-base
+          then: posix
       run:
-        - eigen
         - if: osx
           then: llvm-openmp
       run_exports:
@@ -60,7 +58,7 @@ outputs:
     tests:
       - script:
         - if: win
-          then: if not exist %PREFIX%\Library\lib\ChronoEngine.lib exit 1
+          then: test -f ${PREFIX}/lib/ChronoEngine${SHLIB_EXT}
           else: test -f ${PREFIX}/lib/libChronoEngine${SHLIB_EXT}
 
   - package:
@@ -77,14 +75,14 @@ outputs:
         - if: osx
           then: llvm-openmp
         - if: win
-          then: m2-base
+          then: posix
       host:
         - ${{ pin_subpackage('chrono', exact=True) }}
         - opencascade
         - if: osx
           then: llvm-openmp
         - if: win
-          then: m2-base
+          then: posix
       run:
         - ${{ pin_subpackage('chrono', exact=True) }}
         - if: osx
@@ -114,7 +112,7 @@ outputs:
         - if: osx
           then: llvm-openmp
         - if: win
-          then: m2-base
+          then: posix
       host:
         - ${{ pin_subpackage('chrono', exact=True) }}
         - ros-humble-rclcpp
@@ -127,7 +125,7 @@ outputs:
         - if: osx
           then: llvm-openmp
         - if: win
-          then: m2-base
+          then: posix
       run:
         - ${{ pin_subpackage('chrono', exact=True) }}
         - if: osx
@@ -158,7 +156,7 @@ outputs:
         - if: osx
           then: llvm-openmp
         - if: win
-          then: m2-base
+          then: posix
       host:
         - ${{ pin_subpackage('chrono', exact=True) }}
         - eigen
@@ -166,7 +164,7 @@ outputs:
         - if: osx
           then: llvm-openmp
         - if: win
-          then: m2-base
+          then: posix
       run:
         - ${{ pin_subpackage('chrono', exact=True) }}
         - python
