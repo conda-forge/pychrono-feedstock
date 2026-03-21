@@ -1,7 +1,6 @@
 @echo on
 
 cmake %CMAKE_ARGS% ^
-      -G Ninja ^
       -B build ^
       -DBUILD_DEMOS:BOOL=OFF ^
       -DCH_CONDA_INSTALL:BOOL=ON ^
@@ -22,8 +21,8 @@ cmake %CMAKE_ARGS% ^
       .
 if errorlevel 1 exit 1
 
-cmake --build build -j%CPU_COUNT%
+cmake --build build --config Release -j%CPU_COUNT%
 if errorlevel 1 exit 1
 
-cmake --install build
+cmake --install build --config Release
 if errorlevel 1 exit 1
