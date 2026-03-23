@@ -37,3 +37,11 @@ cmake ${CMAKE_ARGS} \
 # gcc gets out of memory
 cmake --build build -j${CPU_COUNT}
 cmake --install build
+
+# Fix absolute paths to system libraries in CMake exported targets
+if [[ "${target_platform}" == linux-* ]]; then
+    find ${PREFIX} -name "*.cmake" -type f -exec \
+        sed -i 's|/[^;]*libpthread\.so|pthread|g' {} +
+    find ${PREFIX} -name "*.cmake" -type f -exec \
+        sed -i 's|/[^;]*librt\.so|rt|g' {} +
+fi
