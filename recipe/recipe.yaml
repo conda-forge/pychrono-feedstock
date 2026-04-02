@@ -2,9 +2,9 @@ schema_version: 1
 
 context:
   name: chrono
-  version: 9.0.1
-  build: 4
-  sha256: 86da726ed3e3bacf682666b21d9c95dc87746b026dbafc722051a3202b822d39
+  version: "10.0.0"
+  build: 0
+  sha256: 7feb9b2f9ab2b3377d4957e00c0bacedc7dbdd6eecb4f337da626b28f4cb99a1
 
 recipe:
   name: ${{ name }}
@@ -13,10 +13,6 @@ recipe:
 source:
   url: https://github.com/projectchrono/chrono/archive/${{ version }}.tar.gz
   sha256: ${{ sha256 }}
-  patches:
-    - patches/osx_swig.patch
-    - patches/eigen5_version.patch
-    - patches/ninja_cmake_generator_expression.patch
 
 build:
   number: ${{ build }}
@@ -59,8 +55,8 @@ outputs:
     tests:
       - script:
         - if: win
-          then: if not exist %PREFIX%\Library\lib\ChronoEngine.lib exit 1
-          else: test -f ${PREFIX}/lib/libChronoEngine${SHLIB_EXT}
+          then: if not exist %PREFIX%\Library\lib\Chrono_core.lib exit 1
+          else: test -f ${PREFIX}/lib/libChrono_core${SHLIB_EXT}
 
   - package:
       name: pychrono
@@ -72,6 +68,9 @@ outputs:
         - cmake
         - ninja
         - swig >=4.2,<4.3
+        - python
+        - if: build_platform != target_platform
+          then: cross-python_${{ target_platform }}
         - if: linux and not aarch64
           then: libgomp
         - if: osx
